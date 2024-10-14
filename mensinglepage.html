@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Add Cart Icon in Navbar -->
+<header class="grid">
+    <nav class="s-12 grid background-none background-primary-highlight">
+        <a href="index.html" class="m-12 l-3 padding-2x logo"></a>
+        <div class="top-nav s-12 l-9"> 
+            <div class="brand-name">ShoePluse</div>
+            <ul class="top-ul right chevron">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="mensection.html">Men</a></li>
+                <li><a href="womensection.html">Women</a></li>
+                <li><a href="boysection.html">Boys</a></li>
+                <li><a href="girlsection.html">Girls</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="promotions.html">Promotions</a></li>
+                <li class="cart-icon-container">
+                    <a href="#" class="cart-icon" onclick="openCart()">
+                        <img src="img/cart-icon.png" alt="Cart" />
+                        <span id="cartCount" class="cart-count">0</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<!-- Image Slider -->
+<div class="slider1">
+    <div class="slides">
+        <div class="slide"><img src="img/navbar.jpg" alt="Slide 1"></div>
+        <div class="slide"><img src="img/1697149052453.jpg" alt="Slide 2"></div>
+        <div class="slide"><img src="img/istockphoto-517280346-612x612.jpg" alt="Slide 3"></div>
+        <div class="slide"><img src="img/men2.jpg" alt="Slide 4"></div>
+
+    </div>
+    <a class="prev" onclick="moveSlide(-1)">&#10094;</a>
+    <a class="next" onclick="moveSlide(1)">&#10095;</a>
+    <div class="dots">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+
+    </div>
+</div>
+<!-- Product Details -->
+<div class="product-details">
+    <div class="product-image">
+        <img src="" alt="">
+    </div>
+    <div class="product-info">
+        <h1></h1>
+        <p>Price: <span id="itemPrice"></span></p>
+        <div class="des">
+            <p>Disclaimer: There may be a slight color variation in the image from the original product.</p>
+        </div>
+        <h1>SIZE</h1>
+        <div class="container">
+            <div class="square" onclick="setSize(10)">10</div>
+            <div class="square" onclick="setSize(9)">9</div>
+            <div class="square" onclick="setSize(8)">8</div>
+            <div class="square" onclick="setSize(7)">7</div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="form1">Size</label>
+                <input id="form1" type="text" maxlength="13" autocomplete="off" class="custom-input" readonly>
+                
+                <label>Amount</label>
+                <div class="number-input">
+                    <button class="button" onclick="decrease()">&#8595;</button>
+                    <input type="number" id="numberField" value="0" min="0" class="number-field">
+                    <button class="button" onclick="increase()">&#8593;</button>
+                </div>
+                <a href="#" class="cart-button" onclick="addToCart()">ADD TO CART</a>
+            </div>
+            <a href="#" class="back-button" onclick="buyProduct(event)">BUY</a>
+        
+            <a href="index.html" class="back-button">Back to Collection</a>
+        </div>
+    </div>
+</div>
+
+<!-- Payment Modal -->
+<div id="paymentModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+
+        <!-- Payment Information (cards accepted) -->
+        <div class="inputBox">
+            <span>cards accepted :</span>
+            <img src="img/card_img.png" alt="">
+        </div>
+
+        <!-- Payment Form -->
+        <div id="formContainer">
+            <form id="paymentForm">
+                <div class="form-group">
+                    <label for="nameOnCard">Name on Card</label>
+                    <input type="text" id="nameOnCard" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="cardNumber">Card Number</label>
+                    <input type="text" id="cardNumber" placeholder="1234 5678 9123 4567" maxlength="16" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="text" id="price" placeholder="Rs:10000" maxlength="16" required>
+                </div>
+                <div class="form-group">
+                    <label for="expiryDate">Expiry Date</label>
+                    <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5" required>
+                </div>
+                <div class="form-group">
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" placeholder="123" maxlength="3" required>
+                </div>
+                <button type="submit" class="submit-button">Pay Now</button>
+            </form>
+        </div>
+
+        <!-- Success Message (initially hidden) -->
+        <div id="successMessage" style="display: none;">
+            <h2>Payment Successful!</h2>
+            <p>Thank you for your purchase.</p>
+            <button class="submit-button" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Function to open the payment modal
+function buyProduct(event) {
+    event.preventDefault();
+
+    // Validate size and amount
+    const size = document.getElementById('form1').value;
+    const amount = document.getElementById('numberField').value;
+
+    if (!size || amount <= 0) {
+        alert('Please select a size and enter a valid amount');
+        return;
+    }
+
+    // Get the price from the product details
+    const price = document.getElementById('itemPrice').textContent; // Assuming 'itemPrice' contains the price on the main page
+
+    // Open the payment modal
+    const modal = document.getElementById("paymentModal");
+    modal.style.display = "flex";
+
+    // Set the price in the payment modal's price input field
+    document.getElementById('price').value = price;
+
+    // Make sure the payment form and payment information (cards, accepted text) is visible
+    document.getElementById('paymentForm').style.display = 'block';
+    document.querySelector('.inputBox').style.display = 'block';
+
+    // Attach the close event to the close button
+    const closeModal = document.querySelector('.close');
+    closeModal.addEventListener('click', function() {
+        modal.style.display = "none";
+    });
+}
+
+// Optional: Close the modal if the user clicks outside the modal
+window.onclick = function(event) {
+    const modal = document.getElementById("paymentModal");
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Handle form submission
+document.getElementById("paymentForm").onsubmit = function(event) {
+    event.preventDefault();
+
+    const cardNumber = document.getElementById('cardNumber').value;
+    const expiryDate = document.getElementById('expiryDate').value;
+    const cvv = document.getElementById('cvv').value;
+    const nameOnCard = document.getElementById('nameOnCard').value;
+
+    // Validate fields and process payment (for now, just show the success message in the modal)
+    if (cardNumber && expiryDate && cvv && nameOnCard) {
+        displaySuccessMessage();
+    } else {
+        alert('Please fill all the fields correctly.');
+    }
+};
+
+// Function to display the success message in the modal
+function displaySuccessMessage() {
+    // Hide the form and the payment information
+    document.getElementById('paymentForm').style.display = 'none';
+    document.querySelector('.inputBox').style.display = 'none';
+
+    // Display the success message
+    const successMessage = document.getElementById('successMessage');
+    successMessage.style.display = 'block';
+}
+
+// Function to close the modal when the user clicks the "Close" button
+function closeModal() {
+    const modal = document.getElementById("paymentModal");
+    modal.style.display = "none";
+
+    // Restore the payment form after closing the modal (to allow reuse)
+    restoreForm();
+}
+
+// Function to restore the payment form after closing the modal
+function restoreForm() {
+    // Show the payment form and payment information again when the modal is reopened
+    document.getElementById('paymentForm').style.display = 'block';
+    document.querySelector('.inputBox').style.display = 'block';
+
+    // Hide the success message for next use
+    document.getElementById('successMessage').style.display = 'none';
+}
+
+
+</script>
+
+<!-- Cart Popup -->
+<div class="cart-popup" id="cartPopup">
+    <div class="cart-content">
+        <h2>Shopping Cart</h2>
+        <div id="cartItems">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+        <button class="close-button" onclick="closeCart()">Close</button>
+    </div>
+</div>
+
+<!-- Add your popups here -->
+<div class="popup" id="addToCartPopup">
+    <div class="popup-content">
+        <p>Your item has been added to the cart.</p>
+        <button onclick="closePopup('addToCartPopup')">Close</button>
+    </div>
+</div>
+
+<div class="popup" id="errorPopup">
+    <div class="popup-content1">
+        <p class="error">Please add size and amount before adding to cart.</p>
+        <button onclick="closeErrorPopup()">Close</button>
+    </div>
+</div>
+
+<script>
+    let selectedSize;
+    let cart = [];
+
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        const results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const productName = getUrlParameter('name');
+        const productPrice = getUrlParameter('price');
+        const productImage = getUrlParameter('img');
+
+        document.querySelector('.product-image img').src = productImage;
+        document.querySelector('.product-image img').alt = productName;
+        document.querySelector('.product-info h1').textContent = productName;
+        document.querySelector('#itemPrice').textContent = productPrice;
+    });
+
+    function setSize(size) {
+        selectedSize = size;
+        document.getElementById('form1').value = size;
+    }
+
+    function addToCart() {
+        const amount = document.getElementById('numberField').value;
+        if (!selectedSize || amount <= 0) {
+            document.getElementById('errorPopup').style.display = 'block';
+            return;
+        }
+
+        const cartItem = {
+            name: document.querySelector('.product-info h1').textContent,
+            price: document.getElementById('itemPrice').textContent,
+            size: selectedSize,
+            quantity: parseInt(amount),
+            image: document.querySelector('.product-image img').src,
+        };
+
+        cart.push(cartItem);
+        document.getElementById('addToCartPopup').style.display = 'block';
+        updateCartCount();
+    }
+
+    function updateCartCount() {
+        const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+        document.getElementById('cartCount').textContent = cartCount;
+    }
+
+    function openCart() {
+        const cartItemsDiv = document.getElementById('cartItems');
+        cartItemsDiv.innerHTML = ''; // Clear previous items
+        cart.forEach((item, index) => {
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('cart-item');
+            itemDiv.innerHTML = `
+                <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px;">
+                <p>Name: ${item.name} 
+                    <br/>
+            Size: ${item.size} 
+            <br/>
+             Price: ${item.price} 
+             <br/>
+              Quantity: ${item.quantity}</p>
+                <div style="margin-top: 30%;">
+                    <button class="remove-button" onclick="removeFromCart(${index})">Remove</button>
+                </div>
+            `;
+            cartItemsDiv.appendChild(itemDiv);
+        });
+        document.getElementById('cartPopup').style.display = 'block';
+    }
+    
+
+    function removeFromCart(index) {
+        cart.splice(index, 1); // Remove the item from the cart array
+        updateCartCount(); // Update the cart count
+        openCart(); // Refresh the cart display
+    }
+
+    function closeCart() {
+        document.getElementById('cartPopup').style.display = 'none';
+    }
+
+    function increase() {
+        const numberField = document.getElementById('numberField');
+        numberField.value = parseInt(numberField.value) + 1;
+    }
+
+    function decrease() {
+        const numberField = document.getElementById('numberField');
+        if (numberField.value > 0) {
+            numberField.value = parseInt(numberField.value) - 1;
+        }
+    }
+
+    function closePopup(id) {
+        document.getElementById(id).style.display = 'none';
+    }
+
+    function closeErrorPopup() {
+        closePopup('errorPopup');
+    }
+</script>
+<!-- company details -->
+<div class="inline-statements">
+    <span>Due to fuel quota-related delivery disruptions, there may be minor delivery delays. Kindly contact our hotline if your package has not arrived within the above timeline.</span>
+    <span>Shipping charges may vary, based on the weight and the number of pairs you purchase. For further information, check the variable rate chart included in the Shipping Policy section in “Terms and Conditions.”</span>
+    <span>For Pickup orders placed through Koko, please check the Pick up orders Koko in “Terms and Conditions.”</span>
+</div>
+<!-- shoe slider  -->
+<div class="slider11">
+    <div class="slides11">
+        <div class="slide11"><img class="image" src="img/men/ZH0200-1.jpg" alt="Image 1"></div>
+        <div class="slide11"><img class="image" src="img/women/YJ0289-1.jpg" alt="Image 2"></div>
+        <div class="slide11"><img class="image" src="img/boy/YL0465-1.jpg" alt="Image 3"></div>
+        <div class="slide11"><img class="image" src="img/girls/JD0507-5-scaled.jpg" alt="Image 4"></div>
+        <div class="slide11"><img class="image" src="img/men/ZH0198-1.jpg" alt="Image 5"></div>
+        <div class="slide11"><img class="image" src="img/women/HR2645-1.jpg" alt="Image 6"></div>
+        <div class="slide11"><img class="image" src="img/boy/YL0467-1.jpg" alt="Image 7"></div>
+        <div class="slide11"><img class="image" src="img/girls/PF0454-1-1 (2).jpg" alt="Image 8"></div>
+        <div class="slide11"><img class="image" src="img/men/ZH0186-1.jpg" alt="Image 9"></div>
+        <div class="slide11"><img class="image" src="img/women/ZG0605-1.jpg" alt="Image 10"></div>
+    </div>
+</div>
+<!-- footer -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-column">
+                <h4>ABOUT</h4>
+                <ul>
+                    <li><a href="aboutus.html">About Us</a></li>
+                    <li><a href="prmotions.html">Gift Cards</a></li>
+                    <li><a href="https://www.instagram.com/">Store Network</a></li>
+                    <img class="image11" src="img/Screenshot 2024-10-07 222901.jpg" alt="Mastercard">
+                </ul>
+            </div>
+        <div class="footer-column">
+            <h4>HELP</h4>
+            <ul>
+                <li><a href="#" id="contact-link">Contact Us</a></li>
+                <li><a href="tems_and_conditions.html">Terms and Conditions</a></li>
+                <li><a href="tems_and_conditions.html">FAQ</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+                <h4>FOLLOW</h4>
+                <ul>
+                    <li><a href="https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2F">Facebook</a></li>
+                    <li><a href="https://www.instagram.com/">Instagram</a></li>
+                    <li><a href="https://www.youtube.com/">Youtube</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>SIGN UP</h4>
+                <p>Sign up to our newsletter</p>
+                <form action="#">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; ShoePluse Company of Ceylon Ltd</p>
+        <div class="payment-icons">
+            <img src="img/card_img.png" alt="Mastercard">
+        </div>
+    </div>
+
+    <!-- Pop-up Modal -->
+    <div id="contact-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Contact Us</h2>
+            <p>Email: <a href="mailto:kumara.lakshan984@gmail.com">kumara.lakshan984@gmail.com</a></p>
+            <p>Phone: <a href="tel:+764871803">+76 4871 803</a></p>
+            <form id="contact-form">
+                <label for="name">Name *</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="message">Message *</label>
+                <textarea id="message" name="message" required></textarea>
+                
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('contact-modal');
+    const contactLink = document.getElementById('contact-link');
+    const closeBtn = document.querySelector('.close');
+
+    // Open the modal
+    contactLink.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // Close the modal
+    closeBtn.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    // Form submission
+    document.getElementById('contact-form').onsubmit = function(event) {
+        event.preventDefault(); // Prevent the form from submitting
+
+        // Show a success message
+        alert('Your message has been sent!');
+        
+        // Optionally, reset the form fields
+        this.reset();
+        modal.style.display = "none"; // Close modal after sending
+    }
+});
+</script>
+<script>
+    // shoe slider 
+let currentIndex = 0;
+const totalImages = 4; // Total number of images
+const imagesToShow = 5; // Number of images to show at once
+const slides11 = document.querySelector('.slides11');
+
+function showNextImages() {
+    currentIndex += imagesToShow;
+
+    if (currentIndex >= totalImages) {
+        currentIndex = 0; // Reset to the first set
+    }
+
+    const offset = -(currentIndex * (100 / imagesToShow));
+    slides11.style.transform = `translateX(${offset}%)`;
+}
+
+// Automatically show next images every 3 seconds
+setInterval(showNextImages, 3000);
+
+
+///////////////////////////////////////////////////////////////////
+    // shoe section sise and amounts
+    let slideIndex = 1;
+    showSlides(slideIndex);
+    
+    // Next/previous controls
+    function moveSlide(n) {
+        showSlides(slideIndex += n);
+    }
+    
+    // Thumbnail image controls
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+    
+    function showSlides(n) {
+        let i;
+        const slides = document.getElementsByClassName("slide");
+        const dots = document.getElementsByClassName("dot");
+    
+        if (n > slides.length) {slideIndex = 1;}
+        if (n < 1) {slideIndex = slides.length;}
+    
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+        }
+    
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+    
+        slides[slideIndex - 1].style.display = "block";  
+        dots[slideIndex - 1].className += " active";
+    }
+    
+    // Automatic slideshow
+    let slideInterval = setInterval(function() {
+        moveSlide(1);
+    }, 5000); // Change slide every 5 seconds
+    
+
+    const cart = []; 
+
+
+    function updateCartCount() {
+        document.getElementById('cartCount').innerText = cart.length;
+    }
+// add to the cart 
+function addToCart() {
+    const size = document.getElementById('form1').value;
+    const amount = parseInt(document.getElementById('numberField').value);
+    
+    // Get price and remove any non-numeric characters
+    const priceText = document.getElementById('itemPrice').innerText;
+    const price = parseFloat(priceText.replace(/[^0-9.-]+/g, '')); // Strip non-numeric characters
+
+    const productName = "<?php echo $productName; ?>";
+
+    if (!size || amount <= 0 || isNaN(price)) {
+        document.getElementById('errorPopup').style.display = 'flex';
+    } else {
+        // Calculate total price based on the amount
+        const totalPrice = (price * amount).toFixed(2); // Ensures two decimal places
+        cart.push({ productName, size, amount, totalPrice });
+        updateCartCount();
+        document.getElementById('addToCartPopup').style.display = 'flex';
+    }
+}
+
+// cart button prosess
+function openCart() {
+    const cartPopupContent = document.getElementById('popupContent');
+    cartPopupContent.innerHTML = ''; // Clear previous content
+
+    if (cart.length > 0) {
+        cart.forEach((item, index) => {
+            cartPopupContent.innerHTML += `
+                <div class="cart-item">
+                    <strong>Cart Section</strong><br>
+                    <p>Product: ${item.productName}</p>
+                    <p>Size: ${item.size}</p>
+                    <p>Amount: ${item.amount}</p>
+                    <p>Price: $${item.totalPrice}</p> <!-- Show total price -->
+                    <br>
+                    <button style="display: block; margin-top: 10px;" onclick="removeFromCart(${index})">Remove</button>
+                </div>
+            `;
+        });
+    } else {
+        cartPopupContent.innerHTML = `<p>Your cart is empty.</p>`;
+    }
+
+    cartPopupContent.innerHTML += `<button class="close-button" onclick="closePopup('cartPopup')">Close</button>`;
+    document.getElementById('cartPopup').style.display = 'flex';
+}
+
+
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        updateCartCount();
+        openCart();
+    }
+
+    function closePopup(popupId) {
+        document.getElementById(popupId).style.display = 'none';
+    }
+
+    function closeErrorPopup() {
+        document.getElementById('errorPopup').style.display = 'none';
+    }
+
+</script>
+
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        margin: auto;
+        width: 600px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        position: relative;
+    }
+    
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+    
+    .submit-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .submit-button:hover {
+        background-color: #45a049;
+    }
+    
+    .modal-lg {
+        max-width: 900px; /* Adjust the size of the modal as needed */
+    }
+    
+    #card-element {
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+
+
+
+    /* shoe slider  */
+ .slider11 {
+    overflow: hidden;
+    width: 100%; /* Set your desired width */
+    position: relative;
+}
+
+.slides11 {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.slide11 {
+    min-width: 20%; /* Show 5 images at a time (100% / 5) */
+    box-sizing: border-box; /* Use border-box to include padding and border in the width */
+}
+
+.image { /* Set the width of images */
+    width: 100%; /* Make each image take the full width of its slide */
+    display: block;
+}
+
+.brand-name{
+    size: 50px;
+}
+.inline-statements {
+    display: flex; /* Aligns items in a row */
+    justify-content: flex-end; /* Aligns items to the right */
+    gap: 20px; /* Adjust spacing between statements */
+    margin: 20px; /* Optional: adds space around the container */
+}
+.close-button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+   
+}
+
+    .pharagraph{
+    margin: 15px;
+    position: relative;
+    overflow: hidden; 
+    transition: transform 0.3s ease; 
+  }
+    
+     .product-details {
+        display: flex;
+        padding: 20px;
+    }
+
+    .product-image {
+        flex: 1;
+        display: flex;
+        justify-content: center; 
+        align-items: center; 
+    }
+
+    .product-image img {
+        max-width: 120%; 
+        height: auto; 
+    }
+    .product-info {
+        flex: 1;
+        padding: 30px;
+    }
+    .product-info h1 {
+        font-size: 2em;
+    }
+    .product-info p {
+        font-size: 1.5em;
+        margin-top: 10px;
+    }
+
+    .back-button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+    .des {
+        font-size: 0.9em;
+        margin-top: 10px;
+    }
+
+    /* Square Layout Styles */
+    .container {
+        display: flex;
+        grid-template-columns: repeat(3, 2fr); /* 2 columns */
+        gap: 5px; /* Space between squares */
+        max-width: 400px; /* Adjust width as needed */
+        margin: 5px auto; /* Center the grid */
+    }
+
+    .square {
+        background-color: #007BFF;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 60px; /* Fixed width */
+        height: 60px; /* Fixed height */
+        font-size: 24px; /* Font size */
+        border-radius: 5px; /* Rounded corners */
+    }
+    .custom-input{
+        width: 50px;
+    height: 30px;
+    font-size: 20px;
+    margin-left: 10px; 
+    }
+    .form-group {
+    display: flex; 
+    align-items: center; 
+}
+    .form-group1 {
+        display: flex; 
+    align-items: center; 
+    margin-left: auto; 
+}
+
+.custom-input {
+    margin-right: 10px; 
+}
+
+.number-input {
+    display: flex; 
+    align-items: center; 
+}
+
+.button {
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    font-size: 20px; 
+}
+
+.number-field {
+    width: 50px; /* Set width of number input */
+    text-align: center; /* Center text in input */
+}
+
+.cart-button {
+    display: grid;
+    margin-left: 20px; /* Space between number input and cart button */
+    padding: 10px 20px;
+    background-color: red;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.label {
+    margin-right: 10px; 
+}
+    /* Popup Styles */
+    .popup {
+        display: none; 
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 29%;
+        height: 20%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.5); 
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;   
+
+       /* position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        z-index: 1000;
+        width: 400px;
+        display: none;    */ 
+    }
+    .buypopup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+       
+    }
+    .popup-content1 {
+        background: #008000; /* Background color */
+    padding: 20px;
+    max-width: 400px;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    
+    }
+    .error {
+        color: white;
+        font-weight: bold;
+    }
+    /* Cart Icon in Navbar */
+.cart-icon-container {
+    position: relative;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.cart-icon img {
+    width: 30px;
+    height: 30px;
+}
+
+.cart-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 50%;
+    font-size: 14px;
+}
+/* Popup Content for Cart */
+.popup-content {
+    background-color: rgb(0, 150, 45);
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.popup-content h2 {
+    margin-bottom: 15px; /* Spacing between the title and the content */
+}
+.popup-content p {
+    margin: 5px 0; /* Spacing between paragraphs */
+}
+.cart-item {
+    display: grid;
+    justify-content: space-between;
+    margin: 10px 0;
+    margin-bottom: 15px; /* Spacing between items */
+    text-align: left;
+}
+
+.cart-item button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+/* payment portel */
+
+.payment {
+    position: relative;
+}
+
+.buypopup {
+    display: none; /* Hidden initially */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: auto;
+    background-color: white;
+    padding: 20px;
+    border: 1px solid black;
+    z-index: 1000;
+}
+
+.popup-content2 {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.inputBox {
+    margin: 15px 0;
+}
+
+.inputBox span {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.inputBox input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+.inputBox input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.col {
+    flex: 1;
+    margin: 30px;
+}
+
+.submit-btn, .close-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover, .close-button:hover {
+    background-color: #0056b3;
+}
+
+.close-button {
+    background-color: #dc3545;
+}
+
+.close-button:hover {
+    background-color: #c82333;
+}
+
+@media (max-width: 600px) {
+    .row {
+        flex-direction: column;
+    }
+    
+    .col {
+        margin: 0;
+        margin-bottom: 15px;
+    }
+}
+.confirmation-popup {
+    display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 100; /* Ensures the popup is on top */
+        transition: opacity 0.3s ease;
+    }
+    .confirmation-content {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        max-width: 500px; /* Optional: set a max width for the content */
+        width: 90%;
+        animation: fadeIn 0.3s ease;  
+    }
+    /*cart pop up*/
+    .cart-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        z-index: 1000;
+        width: 400px;
+        display: none; /* Initially hidden */
+    }
+
+    .cart-item {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+    }
+    .remove-button {
+        display: block;
+    margin-top: 5px; /* Space above the button */
+    background: none; /* Change fixed to none */
+    border: none;
+    color: red;
+    cursor: pointer;
+    text-align: left;
+    margin-right: 50%;
+    }
+
+    footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-section {
+            flex: 1;
+            padding: 10px;
+        }
+
+        .footer-section h2,
+        .footer-section h3 {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin: 5px 0;
+        }
+
+        .footer-section a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            text-decoration: underline;
+        }
+
+        .social-media img {
+            width: 30px; /* Adjust size as needed */
+            margin: 0 5px;
+        }
+
+  .footer-section h4 {
+    font-size: 36px; /* Adjust size as needed */
+    font-weight: bold; /* Optional: make it bold */
+    color: red; /* Optional: change the color */
+    margin: 10px 0;  
+  } 
+  .footer-section.social-media {
+    
+    flex-direction:row; /* Stacks items vertically */
+    align-items: center; /* Centers items horizontally */
+}
+
+
+</style>
+</body>
+</html>

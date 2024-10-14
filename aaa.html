@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Add Cart Icon in Navbar -->
+<header class="grid">
+    <nav class="s-12 grid background-none background-primary-hightlight">
+        <a href="index.html" class="m-12 l-3 padding-2x logo"></a>
+        <div class="top-nav s-12 l-9"> 
+            <div class="brand-name">ShoePluse</div>
+            <ul class="top-ul right chevron">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about-us.html">About Us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="gallery.html">Profile</a></li>
+                <li><a href="http://localhost/xampp/ParkingSystem/login_form.php">Logout</a></li>
+                <li class="cart-icon-container">
+                    <a href="#" class="cart-icon" onclick="openCart()">
+                        <img src="img/cart-icon.png" alt="Cart" />
+                        <span id="cartCount" class="cart-count">0</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+ <!-- image slider  -->
+ <div class="slider1">
+  <div class="slides">
+    <div class="slide"><img src="img/11222.jpg" alt="Slide 1"></div>
+    <div class="slide"><img src="img/1697149052453.jpg" alt="Slide 2"></div>
+    <div class="slide"><img src="img/shoe.jpg" alt="Slide 3"></div>
+  </div>
+  <a class="prev" onclick="moveSlide(-1)">&#10094;</a>
+  <a class="next" onclick="moveSlide(1)">&#10095;</a>
+  <div class="dots">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+    <span class="dot" onclick="currentSlide(4)"></span>
+  </div>
+</div>
+
+<script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+    // Next/previous controls
+    function moveSlide(n) {
+      showSlides(slideIndex += n);
+    }
+    // Thumbnail image controls
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+    function showSlides(n) {
+      let i;
+      const slides = document.getElementsByClassName("slide");
+      const dots = document.getElementsByClassName("dot");
+
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+      }
+      
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+
+      slides[slideIndex-1].style.display = "block";  
+      dots[slideIndex-1].className += " active";
+    }
+
+    // Automatic slideshow
+    let slideInterval = setInterval(function() {
+      moveSlide(1);
+    }, 5000); // Change slide every 5 seconds
+
+</script>
+
+<!-- Product Details -->
+<?php
+// Retrieve query parameters
+$productName = htmlspecialchars($_GET['name']);
+$productPrice = htmlspecialchars($_GET['price']);
+$productImage = htmlspecialchars($_GET['img']);
+?>
+
+<div class="product-details">
+    <div class="product-image">
+        <img src="<?php echo $productImage; ?>" alt="<?php echo $productName; ?>">
+    </div>
+    <div class="product-info">
+        <h1><?php echo $productName; ?></h1>
+        <p>Price: <span id="itemPrice"><?php echo $productPrice; ?></span></p>
+        <div class="des">
+            <p>Disclaimer: There may be a slight color variation in the image from original product.</p>
+        </div>
+        <h1>SIZE</h1>
+        <div class="container">
+            <div class="square" onclick="setSize(10)">10</div>
+            <div class="square" onclick="setSize(9)">9</div>
+            <div class="square" onclick="setSize(8)">8</div>
+            <div class="square" onclick="setSize(7)">7</div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="form1">Size</label>
+                <div class="form-group1">
+                    <input asp-for="form1" id="form1" type="text" maxlength="13" autocomplete="off" class="custom-input">
+                    
+                    <label>Amount</label>
+                    <div class="number-input">
+                        <button class="button" onclick="decrease()">&#8595;</button>
+                        <input type="number" id="numberField" value="0" min="0" class="number-field">
+                        <button class="button" onclick="increase()">&#8593;</button>
+                    </div>
+                    <a href="#" class="cart-button" onclick="addToCart()">ADD TO CART</a>
+                </div>
+            </div>
+            <a href="" class="back-button" onclick="buyproduct(event)">BUY</a>
+            <a href="index.html" class="back-button">Back to Collection</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function setSize(size) {
+        document.getElementById('form1').value = size;
+    }
+    function increase() {
+        const numberField = document.getElementById('numberField');
+        numberField.value = parseInt(numberField.value) + 1;
+    }
+    function decrease() {
+        const numberField = document.getElementById('numberField');
+        if (numberField.value > 0) {
+            numberField.value = parseInt(numberField.value) - 1;
+        }
+    }
+//cart pop up
+    function addToCart() {
+        const size = document.getElementById('form1').value;
+        const amount = document.getElementById('numberField').value;
+        const price = document.getElementById('itemPrice').innerText;
+
+        if (!size || amount <= 0) {
+            document.getElementById('errorPopup').style.display = 'flex';
+        } else {
+            document.getElementById('popupPrice').innerText = price;
+            document.getElementById('popupSize').innerText = size;
+            document.getElementById('popupAmount').innerText = amount;
+            document.getElementById('popup').style.display = 'flex';
+        }
+    }
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+    }
+
+    function closeErrorPopup() {
+        document.getElementById('errorPopup').style.display = 'none';
+    }
+    // Array to store cart items
+let cart = [];
+
+// Update the cart count and display
+function updateCartCount() {
+    const cartCount = document.getElementById('cartCount');
+    cartCount.innerText = cart.length;
+}
+
+// cart icone Add to cart logic
+function addToCart() {
+    const size = document.getElementById('form1').value;
+    const amount = document.getElementById('numberField').value;
+    const price = document.getElementById('itemPrice').innerText;
+    const productName = "<?php echo $productName; ?>"; // Product name from PHP
+
+    if (!size || amount <= 0) {
+        document.getElementById('errorPopup').style.display = 'flex';
+    } else {
+        // Add item to cart array
+        cart.push({ productName, size, amount, price });
+        
+        // Update the cart count
+        updateCartCount();
+
+        // Update popup content with the correct values
+        document.getElementById('popupPrice').innerText = price;
+        document.getElementById('popupSize').innerText = size;
+        document.getElementById('popupAmount').innerText = amount;
+
+        // Display the popup
+        document.getElementById('popup').style.display = 'flex';
+    }
+}
+
+// Open the cart popup
+function openCart() {
+    console.log("Cart icon clicked"); // Add this to check if the function is being called
+    const cartPopupContent = document.getElementById('popupContent');
+    cartPopupContent.innerHTML = ''; // Clear previous content
+
+    if (cart.length > 0) {
+        cart.forEach((item, index) => {
+            cartPopupContent.innerHTML += 
+                <div class="cart-item">
+                    <p>${item.productName} - Size: ${item.size}, Amount: ${item.amount}, Price: $${item.price}</p>
+                    <button onclick="removeFromCart(${index})">Remove</button>
+                </div>
+            ;
+        });
+    } else {
+        cartPopupContent.innerHTML = <p>Your cart is empty.</p>;
+    }
+
+    document.getElementById('popup').style.display = 'flex'; // Ensure popup is displayed
+}
+
+// Remove item from the cart
+function removeFromCart(index) {
+    cart.splice(index, 1); // Remove item from array
+    updateCartCount();
+    openCart(); // Refresh cart popup
+}
+
+// Close popups
+function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+}
+
+function closeErrorPopup() {
+    document.getElementById('errorPopup').style.display = 'none';
+}
+
+// buy product
+function buyproduct(event) {
+        event.preventDefault();
+        const size = document.getElementById('form1').value;
+        const amount = document.getElementById('numberField').value;
+        const price = document.getElementById('itemPrice').innerText;
+
+        if (!size || amount <= 0) {
+            document.getElementById('errorPopup').style.display = 'flex';
+        } else {
+            document.getElementById('popupPrice').innerText = price;
+            document.getElementById('popupSize').innerText = size;
+            document.getElementById('popupAmount').innerText = amount;
+            document.getElementById('buypopup').style.display = 'flex';
+        }
+    }
+
+    function closePopup() {
+        document.getElementById('buypopup').style.display = 'none';
+    }
+
+    function closePopup(popupId = 'popup') {
+    document.getElementById(popupId).style.display = 'none';
+}
+
+    
+// Open the cart popup cart icon
+function openCart() {
+    console.log("Cart icon clicked"); // Add this to check if the function is being called
+    const cartPopupContent = document.getElementById('popupContent');
+    cartPopupContent.innerHTML = ''; // Clear previous content
+
+    if (cart.length > 0) {
+        cart.forEach((item, index) => {
+            cartPopupContent.innerHTML += 
+                <div class="cart-item">
+                    <p>${item.productName} - Size: ${item.size}, Amount: ${item.amount}, Price: $${item.price}</p>
+                    <button onclick="removeFromCart(${index})">Remove</button>
+                </div>
+            ;
+        });
+    } else {
+        cartPopupContent.innerHTML = <p>Your cart is empty.</p>;
+    }
+
+    document.getElementById('popup').style.display = 'flex'; // Ensure popup is displayed
+}
+
+// Remove item from the cart
+function removeFromCart(index) {
+    cart.splice(index, 1); // Remove item from array
+    updateCartCount();
+    openCart(); // Refresh cart popup
+}
+
+// Close popups
+function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+}
+
+function closeErrorPopup() {
+    document.getElementById('errorPopup').style.display = 'none';
+}
+
+</script>
+<!-- buy pop-up window -->
+<div class="buypopup" id="buypopup">
+    <div class="popup-content">
+        <h2>Buy Item</h2>
+        <p>Price: <span id="popupPrice"></span></p>
+        <p>Size: <span id="popupSize"></span></p>
+        <p>Amount: <span id="popupAmount"></span></p>
+        <button onclick="closePopup('buypopup')">ADD</button>
+        <button onclick="closePopup('buypopup')">Close</button>
+    </div>
+</div>
+<!-- Popup Window  -->
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <h2>Item Added to Cart</h2>
+        <p>Price: <span id="popupPrice"></span></p>
+        <p>Size: <span id="popupSize"></span></p>
+        <p>Amount: <span id="popupAmount"></span></p>
+        <button onclick="closePopup()">ADD</button>
+        <button onclick="closePopup()">Close</button>
+        <button onclick="closePopup()">Remove</button>
+    </div>
+</div>
+<!-- Error Message -->
+<div class="popup" id="errorPopup">
+    <div class="popup-content1">
+        <p class="error">Please Add in Size and Amount before adding to cart.</p>
+        <button onclick="closeErrorPopup()">Close</button>
+    </div>
+</div>
+<div class="popup" id="popup">
+    <div id="popupContent" class="popup-content">
+        <!-- Cart items will be dynamically added here -->
+    </div>
+    <button onclick="closePopup()">Close</button>
+</div>

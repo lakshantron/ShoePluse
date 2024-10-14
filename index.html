@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShoePluse</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="grid">
+        <!-- Top Navigation -->
+        <nav class="s-12 grid background-none background-primary-hightlight">
+           <!-- logo -->
+           <a href="index.html" class="m-12 l-3 padding-2x logo">
+           </a>
+           <div class="top-nav s-12 l-9"> 
+           <div class="brand-name">
+             ShoePluse
+                </div>
+              <ul class="top-ul right chevron">
+              <li><a href="index.html">Home</a></li>
+                <li><a href="mensection.html">Men</a></li>
+                <li><a href="womensection.html">Women</a></li>
+                <li><a href="boysection.html">Boys</a></li>
+                <li><a href="girlsection.html">Girls</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="prmotions.html">Promotions</a></li>
+              </ul>
+           </div>
+        </nav>
+      </header>
+<!-- image slider  -->
+      <div class="slider">
+  <div class="slides">
+  <div class="slide"><img src="img/Leonardo_Phoenix_create_a_logo_image_for_a_footwear_company_ca_0.jpg" alt="Slide 1"></div>
+    <div class="slide"><img src="img/image1.jpg" alt="Slide 2"></div>
+    <div class="slide"><img src="img/image2.jpg" alt="Slide 3"></div>
+    <div class="slide"><img src="img/image3.jpg" alt="Slide 4"></div>
+    <div class="slide"><img src="img/image4.jpg" alt="Slide 5"></div>
+
+  </div>
+  <a class="prev" onclick="moveSlide(-1)">&#10094;</a>
+  <a class="next" onclick="moveSlide(1)">&#10095;</a>
+  <div class="dots">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+    <span class="dot" onclick="currentSlide(4)"></span>
+  </div>
+</div>
+
+<script>
+    let slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function moveSlide(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  const slides = document.getElementsByClassName("slide");
+  const dots = document.getElementsByClassName("dot");
+
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+}
+
+// Automatic slideshow
+let slideInterval = setInterval(function() {
+  moveSlide(1);
+}, 5000); // Change slide every 5 seconds
+
+</script>
+<!-- show section -->
+<section class="products">
+      <h1 class="products-heading">OUR PRODUCTS</h1>
+
+      <div class="product-items-container">
+      <div class="item">
+    <div class="item-layer">
+        <a href="mensection.html">
+            <img src="img/s-l1200.jpg" alt="Men's Section">
+            <h4 class="item-name">MEN</h4>
+        </a>
+    </div>
+    <a href="mensection.html" class="view-product">View Product</a>
+</div>
+
+<div class="item">
+    <div class="item-layer">
+        <a href="womensection.html">
+            <img src="img/LFWGWENFUN38.webp" alt="Men's Section">
+            <h4 class="item-name">LADIES</h4>
+        </a>
+    </div>
+    <a href="womensection.html" class="view-product">View Product</a>
+</div>
+        <div class="item">
+        <div class="item-layer">
+        <a href="boysection.html">
+          <img src="img/BOYS-SHOES-sub-banner.webp" >
+        </div>
+        <h4 class="item-name">BOYS</h4>
+        <a href="boysection.html" class="view-product">View Product</a>
+      </div>
+        <div class="item">
+        <div class="item-layer">
+        <a href="girlsection.html">
+          <img src="img/wr7vq_512.webp" >
+        </div>
+        <h4 class="item-name">GIRLS</h4>
+        <!-- <p class="item-price">$52.99</p> -->
+        <a href="girlsection.html" class="view-product">View Product</a>
+      </div>     
+      </div>
+    </section>
+
+
+    <!-- new arrivel -->
+     
+<h1 class="customers-heading">New Arrival
+</h1>
+    <section class="customers-reviews">
+
+      <div class="customer">
+        <div class="customer-img">
+          <div class="img img-one"></div>
+        </div>
+      </div>
+
+      <div class="customer">
+        <div class="customer-img">
+          <div class="img img-two"></div>
+        </div>
+      </div>
+
+      <div class="customer">
+        <div class="customer-img">
+          <div class="img img-three"></div>
+        </div>
+       
+      </div>
+
+      <div class="customer">
+        <div class="customer-img">
+          <div class="img img-four"></div>
+        </div>
+      </div>
+      <div class="customer">
+        <div class="customer-img">
+          <div class="img img-five"></div>
+        </div>
+      </div>
+      <div class="customer">
+        <div class="customer-img">
+          <div class="img img-six"></div>
+        </div>
+      </div>
+   
+    </section>
+    <script>
+  // Intersection Observer to detect when elements come into view
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate');
+        observer.unobserve(entry.target); // Stop observing once animation has triggered
+      }
+    });
+  });
+
+  // Select all customer elements
+  const customers = document.querySelectorAll('.customer');
+
+  // Observe each customer element
+  customers.forEach(customer => {
+    observer.observe(customer);
+  });
+</script>
+<h1 class="customers-heading">PICK YOUR FAVOURITES
+</h1>
+
+<!-- About Us Section -->
+<header1>
+    <div class="header1-content">
+      <h1 class="main-headings">FORMALS</h1>
+      <p class="primary-headings">
+      Step into Bata's chic collection of casual shoes for women,
+       blending everyday comfort with style. Perfect for any occasion, 
+       ensuring confidence & effortless elegance.
+       <br/>
+       At Bata, we believe in the transformative power of unity—our diverse employees, scattered across the globe, come together with a shared goal: to make a positive impact in the world.
+       </p>
+    </div>
+    <div class="img-container move-left">
+      <img src="img/mens.webp" alt="About Us Image">
+    </div>
+</header1>
+
+<!-- Second Section -->
+<header2 class="header2">
+    <div class="img-container move-right">
+      <img src="img/women.webp" alt="About Us Image">
+    </div>
+    <div class="header2-content">
+      
+      <h1 class="main-headings">CASUAL</h1>
+      <p class="primary-headings">
+      Our casual shoes are the perfect blend of comfort and versatility, designed for those who appreciate both style and functionality in their everyday footwear. Whether you're heading out for a stroll, meeting friends for coffee, or simply running errands, these shoes provide the ideal combination of support and fashion.
+     <br/>
+     Crafted with high-quality materials, our casual shoes feature cushioned insoles and breathable fabrics to keep your feet feeling great all day long.
+      </p>
+    </div>
+</header2>
+<header1>
+    <div class="header1-content">
+      <h1 class="main-headings">BAGS</h1>
+      <p class="primary-headings">
+      Discover the perfect blend of functionality and fashion with our collection of bags, designed for every occasion and lifestyle. From chic handbags to spacious totes, our range offers something for everyone, whether you’re heading to the office, out for a weekend adventure, or enjoying a night on the town.
+       <br/>
+       Crafted with high-quality materials, our bags ensure durability while maintaining a stylish aesthetic. </p>
+    </div>
+    <div class="img-container move-left">
+      <img src="img/bags.webp" alt="About Us Image">
+    </div>
+</header1>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const moveLeftElements = document.querySelectorAll('.move-left');
+    const moveRightElements = document.querySelectorAll('.move-right');
+
+    const options = {
+      root: null, // Use the viewport as the container
+      rootMargin: '0px',
+      threshold: 0.1 // Trigger when 10% of the element is visible
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (entry.target.classList.contains('move-left')) {
+            entry.target.classList.add('animate-left');
+          } else if (entry.target.classList.contains('move-right')) {
+            entry.target.classList.add('animate-right');
+          }
+          observer.unobserve(entry.target); // Stop observing once animated
+        }
+      });
+    }, options);
+
+    moveLeftElements.forEach(element => observer.observe(element));
+    moveRightElements.forEach(element => observer.observe(element));
+  });
+</script>
+
+<h1 class="customers-heading">What We Offer
+</h1>
+<div class="inline-statements">
+    <span>Island wide Delivery
+      <br/>Doorstep Delivery
+    </span>
+    <span>Hassle Free Purchase
+      <br/>Trusted Name
+    </span>
+    <span>International Warranty
+      <br/>Offered in the country of usage
+    </span>
+    <span>100% Secure Checkout
+      <br/>PayPal / MasterCard / Visa
+    </span>
+    <!-- <span>100% Secure Checkout
+      <br/>PayPal / MasterCard / Visa
+    </span> -->
+</div>
+<footer>
+    <div class="footer-container">
+        <div class="footer-column">
+                <h4>ABOUT</h4>
+                <ul>
+                    <li><a href="aboutus.html">About Us</a></li>
+                    <li><a href="prmotions.html">Gift Cards</a></li>
+                    <li><a href="https://www.instagram.com/">Store Network</a></li>
+                    <img class="image11" src="img/Screenshot 2024-10-07 222901.jpg" alt="Mastercard">
+                </ul>
+            </div>
+        <div class="footer-column">
+            <h4>HELP</h4>
+            <ul>
+                <li><a href="#" id="contact-link">Contact Us</a></li>
+                <li><a href="tems_and_conditions.html">Terms and Conditions</a></li>
+                <li><a href="tems_and_conditions.html">FAQ</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+                <h4>FOLLOW</h4>
+                <ul>
+                    <li><a href="https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2F">Facebook</a></li>
+                    <li><a href="https://www.instagram.com/">Instagram</a></li>
+                    <li><a href="https://www.youtube.com/">Youtube</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>SIGN UP</h4>
+                <p>Sign up to our newsletter</p>
+                <form action="#">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; ShoePluse Company of Ceylon Ltd</p>
+        <div class="payment-icons">
+            <img src="img/card_img.png" alt="Mastercard">
+        </div>
+    </div>
+
+    <!-- Pop-up Modal -->
+    <div id="contact-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Contact Us</h2>
+            <p>Email: <a href="mailto:kumara.lakshan984@gmail.com">kumara.lakshan984@gmail.com</a></p>
+            <p>Phone: <a href="tel:+764871803">+76 4871 803</a></p>
+            <form id="contact-form">
+                <label for="name">Name *</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="message">Message *</label>
+                <textarea id="message" name="message" required></textarea>
+                
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('contact-modal');
+    const contactLink = document.getElementById('contact-link');
+    const closeBtn = document.querySelector('.close');
+
+    // Open the modal
+    contactLink.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // Close the modal
+    closeBtn.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    // Form submission
+    document.getElementById('contact-form').onsubmit = function(event) {
+        event.preventDefault(); // Prevent the form from submitting
+
+        // Show a success message
+        alert('Your message has been sent!');
+        
+        // Optionally, reset the form fields
+        this.reset();
+        modal.style.display = "none"; // Close modal after sending
+    }
+});
+</script>
+
+
+    <style>
+  
+.products {
+  margin-top: 10px;
+}
+
+.title-three {
+  font-size: 4rem;
+  margin-left: 10rem;
+  margin-top: 10px;
+  margin-bottom: 10rem;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.card {
+  border: 2px solid #deab5f;
+  padding: 0 20px;
+  height: 400px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 5px;
+  position: relative;
+  margin-bottom: 4rem;
+}
+
+.card-img {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: -60px;
+}
+
+.img-one {
+  background: url(Images/1.png);
+  background-position: center;
+  background-size: cover;
+}
+.img-two {
+  background: url(Images/3.png);
+  background-position: center;
+  background-size: cover;
+}
+.img-three {
+  background: url(Images/4.png);
+  background-position: center;
+  background-size: cover;
+}
+
+.card-title {
+  color: #fff;
+  font-family: sans-serif;
+  margin-top: 50px;
+}
+
+.card .items p {
+  color: #fff;
+  margin: 20px 0;
+  font-family: sans-serif;
+}
+
+/* new arrival */
+
+.customers-heading {
+  font-family: var(--primary-font);
+  font-size: 3rem; 
+  margin-top: 20px;
+  text-align: center;
+ 
+}
+
+
+.customer .customer-img .img {
+  width: 280px;
+  height: 280px;
+  background-size: cover;
+  background-position: center;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.customer-img .img-one {
+  background: url(img/NEW1.jpg);
+}
+.customer-img .img-two {
+  background: url(img/new2.jpg);
+}
+.customer-img .img-three {
+  background: url(img/new3.jpg);
+}
+
+.customer-img .img-four {
+  background: url(img/IMG5.jpg);
+}
+.customer-img .img-five {
+  background: url(img/img1.jpg);
+}
+.customer-img .img-six {
+  background: url(img/img2.jpg);
+}
+
+.customers-reviews {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.customer {
+  text-align: center;
+  opacity: 0;
+  transform: translateY(100px); /* Start below the page */
+  transition: opacity 1s ease, transform 1s ease; /* Make it a smooth transition */
+}
+
+.customer.animate {
+  opacity: 1;
+  transform: translateY(0); /* Slide to normal position */
+}
+
+/* Adjust delay for each customer */
+.customer:nth-child(1) {
+  transition-delay: 0.2s;
+}
+
+.customer:nth-child(2) {
+  transition-delay: 0.4s;
+}
+
+.customer:nth-child(3) {
+  transition-delay: 0.6s;
+}
+
+.customer:nth-child(4) {
+  transition-delay: 0.8s;
+}
+
+@keyframes slide-up {
+  to {
+    opacity: 1;
+    transform: translateY(0); /* Slide to normal position */
+  }
+}
+
+.customer-img .img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #f0f0f0; /* Placeholder background color */
+}
+/* favorites */
+/* header1 */
+header1 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.main-headings {
+  font-size: 2rem;
+  color: #00000097;
+  line-height: 3rem;
+}
+
+/* img-container styles */
+.img-container {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  /* box-shadow: 4px 7px 5px 2px #bcbaba; */
+  overflow: hidden;
+}
+.img-container img {
+  width: 80%;
+  height: 80%; 
+}
+
+/* Animation for image moving from left to right */
+/* Base styles */
+.primary-headings {
+  max-width: 400px;
+  line-height: 25px;
+  /* margin-bottom: 1rem; */
+  color: #020202;
+  font-size: larger;
+  margin-top: -20px;
+}
+
+/* Button styles */
+.btn-fill {
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+/* Header 1 */
+.header1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+/* Header 2 */
+.header2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px; /* Reduced padding */
+  flex-wrap: wrap;
+  margin-top: -20px; 
+
+}
+
+.header2-content {
+  flex: 2;
+  max-width: 400px;
+  
+  
+}
+
+/* Image containers */
+.img-container {
+  flex: 1;
+}
+
+/* Initial state for images before animation */
+.move-left, .move-right {
+  opacity: 0; /* Start as invisible */
+}
+
+/* Animation for image moving from left to right */
+.animate-left {
+  animation: moveFromLeft 2s ease-in-out forwards;
+  opacity: 1; /* Fade in */
+}
+
+/* Animation for image moving from right to left */
+.animate-right {
+  animation: moveFromRight 2s ease-in-out forwards;
+  opacity: 1; /* Fade in */
+}
+
+/* Animation keyframes */
+@keyframes moveFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes moveFromRight {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .header2 {
+    flex-direction: column;
+  }
+
+  .img-container,
+  .header2-content {
+    max-width: 80%;
+     text-align: center;
+     margin-top: 50px; 
+  }
+}
+    </style>
+</body>
+</html>

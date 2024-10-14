@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Men section</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <header class="grid">
+        <!-- Top Navigation -->
+        <nav class="s-12 grid background-none background-primary-hightlight">
+           <!-- logo -->
+           <a href="index.html" class="m-12 l-3 padding-2x logo">
+           </a>
+           <div class="top-nav s-12 l-9"> 
+           <div class="brand-name">
+             ShoePluse
+                </div>
+              <ul class="top-ul right chevron">
+              <li><a href="index.html">Home</a></li>
+                <li><a href="mensection.html">Men</a></li>
+                <li><a href="womensection.html">Women</a></li>
+                <li><a href="boysection.html">Boys</a></li>
+                <li><a href="girlsection.html">Girls</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="prmotions.html">Promotions</a></li>
+              </ul>
+              </ul>
+           </div>
+        </nav>
+      </header>
+    <!-- image slider  -->
+    <div class="slider1">
+  <div class="slides">
+    <div class="slide"><img src="img/navbar.jpg" alt="Slide 1"></div>
+    <div class="slide"><img src="img/men1.webp" alt="Slide 2"></div>
+    <div class="slide"><img src="img/men2.jpg" alt="Slide 3"></div>
+  </div>
+  <a class="prev" onclick="moveSlide(-1)">&#10094;</a>
+  <a class="next" onclick="moveSlide(1)">&#10095;</a>
+  <div class="dots">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+    <span class="dot" onclick="currentSlide(4)"></span>
+  </div>
+</div>
+
+<script>
+    let slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function moveSlide(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  const slides = document.getElementsByClassName("slide");
+  const dots = document.getElementsByClassName("dot");
+
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+}
+
+// Automatic slideshow
+let slideInterval = setInterval(function() {
+  moveSlide(1);
+}, 5000); // Change slide every 5 seconds
+
+</script>
+
+<h1>NEW ARRIVELS</h1>
+<section class="newrelese">
+    <div class="newrelese-section">
+<div class="item-new">
+        <div class="item-layer">
+          <img src="img/NEW1.jpg" >
+        </div>
+      </div>
+<div class="item-new">
+    <div class="item-layer">
+          <img src="img/new2.jpg" >
+    </div>
+</div>
+<div class="item-new">
+    <div class="item-layer">
+          <img src="img/new3.jpg" >
+    </div>
+</div>
+<div class="item-new">
+    <div class="item-layer">
+          <img src="img/new4.jpg" >
+    </div>
+</div>
+</div>
+</section>
+
+<!-- men section -->
+<section class="mensection">
+      <h1>MEN'S COLLECTION</h1>
+
+      <div class="mensection-main-section">
+            <div class="item-men">
+                <a href="mensinglepage.html?name=Bata Mens Brown formal shoes – LUCAN&price=රු10,999.00&img=img/men/ZH0185-1 (1).jpg" class="view-product">
+                    <div class="item-layer">
+                        <img src="img/men/ZH0185-1 (1).jpg" alt="Bata Mens Brown formal shoes – LUCAN">
+                    </div>
+                    Bata Mens Brown formal shoes – LUCAN  
+                    <p>රු10,999.00</p>
+                </a>
+            </div>
+
+    <div class="item-men">
+        <a href="mensinglepage.html?name=Bata Men’s Brown Casual – ABNER&price=රු17,999.00&img=img/men/ZH0185-1.jpg" class="view-product">
+            <div class="item-layer">
+                <img src="img/men/ZH0185-1.jpg" alt="Bata Men’s Brown Casual – ABNER">
+            </div>
+            Bata Men’s Brown Casual – ABNER   
+            <p>රු17,999.00</p>
+        </a>
+    </div>
+
+    <div class="item-men">
+        <a href="mensinglepage.html?name=Brawn Sandals – MELAND&price=රු2,399.00&img=img/men/ZH0186-1.jpg" class="view-product">
+            <div class="item-layer">
+                <img src="img/men/ZH0186-1.jpg" alt="Brawn Sandals – MELAND">
+            </div>
+            Brawn Sandals – MELAND      
+            <p>රු2,399.00</p>
+        </a>
+    </div>
+
+    <div class="item-men">
+        <a href="mensinglepage.html?name=Brown Sandals – COLES&price=රු2,299.00&img=img/men/ZH0187.jpg" class="view-product">
+            <div class="item-layer">
+                <img src="img/men/ZH0187.jpg" alt="Brown Sandals – COLES">
+            </div>
+            Brown Sandals – COLES
+            <p>රු2,299.00</p>
+        </a>
+    </div>
+
+    <div class="item-men">
+        <a href="mensinglepage.html?name=Bata Men’s Brown PVC Casual – CLIFF&price=රු5,999.00&img=img/men/ZH0189-1.jpg" class="view-product">
+            <div class="item-layer">
+                <img src="img/men/ZH0189-1.jpg" alt="Bata Men’s Brown PVC Casual – CLIFF">
+            </div>
+            Bata Men’s Brown PVC Casual – CLIFF
+            <p>රු5,999.00</p>
+        </a>
+    </div>
+
+    <div class="item-men">
+        <a href="mensinglepage.html?name=Bata Men’s Black PVC Casual – COLTON&price=රු5,999.00&img=img/men/ZH0191-1.jpg" class="view-product">
+            <div class="item-layer">
+                <img src="img/men/ZH0191-1.jpg" alt="Bata Men’s Black PVC Casual – COLTON">
+            </div>
+            Bata Men’s Black PVC Casual – COLTON
+            <p>රු5,999.00</p>
+        </a>
+    </div>
+
+    <div class="item-men">
+        <a href="mensinglepage.html?name=Bata beige Casual Shoes – LEO&price=රු8,499.00&img=img/men/ZH0198-1.jpg" class="view-product">
+            <div class="item-layer">
+                <img src="img/men/ZH0198-1.jpg" alt="Bata beige Casual Shoes – LEO">
+            </div>
+            Bata beige Casual Shoes – LEO
+            <p>රු8,499.00</p>
+        </a>
+    </div>
+
+    <div class="item-men">
+        <a href="mensinglepage.html?name=Bata blue Casual Shoes – LEO&price=රු8,499.00&img=img/men/ZH0199-1.jpg" class="view-product">
+            <div class="item-layer">
+                <img src="img/men/ZH0199-1.jpg" alt="Bata blue Casual Shoes – LEO">
+            </div>
+            Bata blue Casual Shoes – LEO
+            <p>රු8,499.00</p>
+        </a>
+    </div>
+
+    <div class="item-men">
+        <a href="mensinglepage.html?name=Bata Mens Brown formal shoes – LUCAN (Copy)&price=රු10,999.00&img=img/men/ZH0200-1.jpg" class="view-product">
+            <div class="item-layer">
+                <img src="img/men/ZH0200-1.jpg" alt="Bata Mens Brown formal shoes – LUCAN (Copy)">
+            </div>
+            Bata Mens Brown formal shoes – LUCAN (Copy)
+            <p>රු10,999.00</p>
+        </a>
+    </div>
+
+    <div class="item-men">
+        <a href="mensinglepage.html?name=Bata Leather – Mens Light Brown formal shoes – Levis&price=රු14,999.00&img=img/men/ZH0202-1.jpg" class="view-product">
+            <div class="item-layer">
+                <img src="img/men/ZH0202-1.jpg" alt="Bata Leather – Mens Light Brown formal shoes – Levis">
+            </div>
+            Bata Leather – Mens Light Brown formal shoes – Levis
+            <p>රු14,999.00</p>
+        </a>
+    </div>
+
+    <div class="item-men">
+        <a href="mensinglepage.html?name=Bata Leather – Mens Light Brown formal shoes – Mafrick&price=රු14,999.00&img=img/men/ZH0203-1.jpg" class="view-product">
+            <div class="item-layer">
+                <img src="img/men/ZH0203-1.jpg" alt="Bata Leather – Mens Light Brown formal shoes – Mafrick">
+            </div>
+            Bata Leather – Mens Light Brown formal shoes – Mafrick
+            <p>රු14,999.00</p>
+        </a>
+    </div>
+</div>
+
+    </section>
+    <footer>
+    <div class="footer-container">
+        <div class="footer-column">
+                <h4>ABOUT</h4>
+                <ul>
+                    <li><a href="aboutus.html">About Us</a></li>
+                    <li><a href="prmotions.html">Gift Cards</a></li>
+                    <li><a href="https://www.instagram.com/">Store Network</a></li>
+                    <img class="image11" src="img/Screenshot 2024-10-07 222901.jpg" alt="Mastercard">
+                </ul>
+            </div>
+        <div class="footer-column">
+            <h4>HELP</h4>
+            <ul>
+                <li><a href="#" id="contact-link">Contact Us</a></li>
+                <li><a href="tems_and_conditions.html">Terms and Conditions</a></li>
+                <li><a href="tems_and_conditions.html">FAQ</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+                <h4>FOLLOW</h4>
+                <ul>
+                    <li><a href="https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2F">Facebook</a></li>
+                    <li><a href="https://www.instagram.com/">Instagram</a></li>
+                    <li><a href="https://www.youtube.com/">Youtube</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>SIGN UP</h4>
+                <p>Sign up to our newsletter</p>
+                <form action="#">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; ShoePluse Company of Ceylon Ltd</p>
+        <div class="payment-icons">
+            <img src="img/card_img.png" alt="Mastercard">
+        </div>
+    </div>
+
+    <!-- Pop-up Modal -->
+    <div id="contact-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Contact Us</h2>
+            <p>Email: <a href="mailto:kumara.lakshan984@gmail.com">kumara.lakshan984@gmail.com</a></p>
+            <p>Phone: <a href="tel:+764871803">+76 4871 803</a></p>
+            <form id="contact-form">
+                <label for="name">Name *</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="message">Message *</label>
+                <textarea id="message" name="message" required></textarea>
+                
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('contact-modal');
+    const contactLink = document.getElementById('contact-link');
+    const closeBtn = document.querySelector('.close');
+
+    // Open the modal
+    contactLink.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // Close the modal
+    closeBtn.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    // Form submission
+    document.getElementById('contact-form').onsubmit = function(event) {
+        event.preventDefault(); // Prevent the form from submitting
+
+        // Show a success message
+        alert('Your message has been sent!');
+        
+        // Optionally, reset the form fields
+        this.reset();
+        modal.style.display = "none"; // Close modal after sending
+    }
+});
+</script>
+
+
+
+</body>
+</html>
